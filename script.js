@@ -1,26 +1,43 @@
 function signUp(event) {
   event.preventDefault();
+
   const username = document.getElementById("signup-username").value;
   const password = document.getElementById("signup-password").value;
+  const email = document.getElementById("signup-email").value;
+  const phone = document.getElementById("signup-phone").value;
 
-  // Save user data in localStorage (for demo purposes)
-  localStorage.setItem("user", JSON.stringify({ username, password }));
-  alert("Sign Up Successful! Please Sign In.");
-  window.location.href = "index.html";
+  // Get existing users
+  let users = JSON.parse(localStorage.getItem("users")) || {};
+
+  if (users[username]) {
+    alert("Username already exists. Please sign in.");
+    window.location.href = "index.html";
+  } else {
+    // Save new user
+    users[username] = { password, email, phone };
+    localStorage.setItem("users", JSON.stringify(users));
+    alert("Sign up successful! Please log in.");
+    window.location.href = "index.html";
+  }
 }
 
 function signIn(event) {
   event.preventDefault();
+
   const username = document.getElementById("signin-username").value;
   const password = document.getElementById("signin-password").value;
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  let users = JSON.parse(localStorage.getItem("users")) || {};
 
-  if (user && user.username === username && user.password === password) {
+  if (!users[username]) {
+    alert("Username doesn’t exist. Try signing up.");
+    return;
+  }
+
+  if (users[username].password === password) {
     alert("Login successful!");
     window.location.href = "welcome.html";
   } else {
-    alert("Invalid username or password!");
+    alert("Incorrect password. Please try again.");
   }
 }
-
