@@ -6,7 +6,7 @@ function signUp(event) {
   const email = document.getElementById("signup-email").value;
   const phone = document.getElementById("signup-phone").value;
 
-  // Get existing users
+  // Retrieve existing users from localStorage
   let users = JSON.parse(localStorage.getItem("users")) || {};
 
   if (users[username]) {
@@ -27,6 +27,7 @@ function signIn(event) {
   const username = document.getElementById("signin-username").value;
   const password = document.getElementById("signin-password").value;
 
+  // Retrieve existing users from localStorage
   let users = JSON.parse(localStorage.getItem("users")) || {};
 
   if (!users[username]) {
